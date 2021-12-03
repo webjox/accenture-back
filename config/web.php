@@ -63,6 +63,12 @@ $config = [
             'showScriptName' => false,
             'rules' => [
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'api/warehouse', 'pluralize' => false],
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'api/workers', 'pluralize' => false],
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'api/material', 'pluralize' => false],
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'api/order', 'pluralize' => false],
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'api/reception-point', 'pluralize' => false],
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'api/shift', 'pluralize' => false],
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'api/vagon', 'pluralize' => false],
                 '<controller:[\w\-]+>/<id:\d+>' => '<controller>/view',
                 '<controller:[\w\-]+>/<action:[\w\-]+>/<id:\d+>' => '<controller>/<action>',
                 '<controller:[\w\-]+>/<action:[\w\-]+>' => '<controller>/<action>',

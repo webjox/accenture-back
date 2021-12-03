@@ -5,6 +5,23 @@ info:
     email: vlad.veresklya@yandex.ru
   version: 1.0.0
 paths:
+  /api/dash-board:
+    get:
+      tags:
+        - Дашборд
+      summary: 'Вся информация для дашборда'
+      operationId: 08aa4b1b53fbd0db6ee50533828050ab
+      parameters:
+        -
+          name: id
+          in: query
+          description: 'Id диспетчера'
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
   /api/login:
     post:
       tags:
