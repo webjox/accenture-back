@@ -1,0 +1,928 @@
+openapi: 3.0.0
+info:
+  title: 'Accencture API'
+  contact:
+    email: vlad.veresklya@yandex.ru
+  version: 1.0.0
+paths:
+  /api/login:
+    post:
+      tags:
+        - Аутентификация/Регистрация
+      summary: 'Авторизация пользователя в систему'
+      operationId: b6ec8cd57b6c51f58b01adce1c078042
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              properties:
+                email:
+                  description: 'E-mail пользователя'
+                  type: string
+                pass:
+                  description: 'Пароль пользователя'
+                  type: string
+              type: object
+      responses:
+        '200':
+          description: 'Авторизация прошла успешно'
+  /api/login/refresh-token:
+    post:
+      tags:
+        - Аутентификация/Регистрация
+      summary: 'Сгенерировать новый рефреш токен пользователю'
+      operationId: eb263606b7936bd836f1d75d319ee33c
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              properties:
+                refresh_token:
+                  description: 'Refresh token пользователя'
+                  type: string
+              type: object
+      responses:
+        '200':
+          description: ''
+  /api/material:
+    get:
+      tags:
+        - Сырье
+      summary: 'Найти все сырье'
+      parameters:
+        -
+          name: per-page
+          in: query
+          description: 'Кол-во записей на странице'
+          required: false
+          schema:
+            type: integer
+        -
+          name: page
+          in: query
+          description: 'Номер страницы'
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+  '/api/material/{id}':
+    get:
+      tags:
+        - Сырье
+      summary: 'Найти сырье по id'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'ID сырья'
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Success
+    put:
+      tags:
+        - Сырье
+      summary: 'Обновить сырье'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              properties:
+                title:
+                  description: 'Название сырья'
+                  type: string
+                defect_frequency:
+                  description: 'Частота брака'
+                  type: double
+                delta:
+                  description: Дельта
+                  type: double
+                dataset:
+                  description: Датасет
+                  type: json
+              type: object
+      responses:
+        '200':
+          description: ''
+    delete:
+      tags:
+        - Сырье
+      summary: 'Удалить сырье по id'
+      operationId: 25f031d64a9331c7c2c05111db6bfe2d
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'ID сырья'
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Success
+  /api/material/:
+    post:
+      tags:
+        - Сырье
+      summary: 'Добавить сырье'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              properties:
+                title:
+                  description: 'Название сырья'
+                  type: string
+                defect_frequency:
+                  description: 'Частота брака'
+                  type: double
+                delta:
+                  description: Дельта
+                  type: double
+                dataset:
+                  description: Датасет
+                  type: json
+              type: object
+      responses:
+        '200':
+          description: ''
+  /api/order:
+    get:
+      tags:
+        - Заказы
+      summary: 'Найти все заказы'
+      parameters:
+        -
+          name: per-page
+          in: query
+          description: 'Кол-во записей на странице'
+          required: false
+          schema:
+            type: integer
+        -
+          name: page
+          in: query
+          description: 'Номер страницы'
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+  '/api/order/{id}':
+    get:
+      tags:
+        - Заказы
+      summary: 'Найти заказы по id'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'ID заказа'
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Success
+    put:
+      tags:
+        - Заказы
+      summary: 'Обновить заказ'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              properties:
+                number_vagon:
+                  description: 'Кол-во вагонов'
+                  type: integer
+                weight:
+                  description: 'Кол-во тонн'
+                  type: double
+                date:
+                  description: Дата
+                  type: date
+                status:
+                  description: Статус
+                  type: integer
+                defect_percent:
+                  description: 'Процент брака'
+                  type: integer
+                defect_weight:
+                  description: 'Вес брака'
+                  type: integer
+                vagons:
+                  description: Вагоны
+                  type: json
+                id_warehouse:
+                  description: 'Id склада'
+                  type: integer
+              type: object
+      responses:
+        '200':
+          description: ''
+    delete:
+      tags:
+        - Заказы
+      summary: 'Удалить заказ по id'
+      operationId: d1a919910bb61ace220d5b0f42230985
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'ID заказа'
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Success
+  /api/order/:
+    post:
+      tags:
+        - Заказы
+      summary: 'Добавить заказ'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              properties:
+                number_vagon:
+                  description: 'Кол-во вагонов'
+                  type: integer
+                weight:
+                  description: 'Кол-во тонн'
+                  type: double
+                date:
+                  description: Дата
+                  type: date
+                status:
+                  description: Статус
+                  type: integer
+                defect_percent:
+                  description: 'Процент брака'
+                  type: integer
+                defect_weight:
+                  description: 'Вес брака'
+                  type: integer
+                vagons:
+                  description: Вагоны
+                  type: json
+                id_warehouse:
+                  description: 'Id склада'
+                  type: integer
+              type: object
+      responses:
+        '200':
+          description: ''
+  /api/reception-point:
+    get:
+      tags:
+        - 'Пункты приема'
+      summary: 'Найти все пункты приема'
+      parameters:
+        -
+          name: per-page
+          in: query
+          description: 'Кол-во записей на странице'
+          required: false
+          schema:
+            type: integer
+        -
+          name: page
+          in: query
+          description: 'Номер страницы'
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+  '/api/reception-point/{id}':
+    get:
+      tags:
+        - 'Пункты приема'
+      summary: 'Найти пункт приема по id'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'ID пунка приема'
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Success
+    put:
+      tags:
+        - 'Пункты приема'
+      summary: 'Обновить пункт приема'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              properties:
+                title:
+                  description: Название
+                  type: string
+                id_technologist:
+                  description: 'Id технолога'
+                  type: integer
+                id_technician:
+                  description: 'Id техника'
+                  type: integer
+                stream_url:
+                  description: 'Ссылка на транслацию'
+                  type: string
+                status:
+                  description: Статус
+                  type: integer
+                queue_vagons:
+                  description: 'Очередь вагонов'
+                  type: json
+                id_order:
+                  description: 'Id заказа'
+                  type: integer
+              type: object
+      responses:
+        '200':
+          description: ''
+    delete:
+      tags:
+        - 'Пункты приема'
+      summary: 'Удалить пункт приема по id'
+      operationId: 7d29e4cf45409eb4386f1aa0b567ddb9
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'ID пункта'
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Success
+  /api/reception-point/:
+    post:
+      tags:
+        - 'Пункты приема'
+      summary: 'Добавить пункт приема'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              properties:
+                title:
+                  description: Название
+                  type: string
+                id_technologist:
+                  description: 'Id технолога'
+                  type: integer
+                id_technician:
+                  description: 'Id техника'
+                  type: integer
+                stream_url:
+                  description: 'Ссылка на транслацию'
+                  type: string
+                status:
+                  description: Статус
+                  type: integer
+                queue_vagons:
+                  description: 'Очередь вагонов'
+                  type: json
+                id_order:
+                  description: 'Id заказа'
+                  type: integer
+              type: object
+      responses:
+        '200':
+          description: ''
+  /api/shift:
+    get:
+      tags:
+        - Смены
+      summary: 'Найти все смены'
+      parameters:
+        -
+          name: per-page
+          in: query
+          description: 'Кол-во записей на странице'
+          required: false
+          schema:
+            type: integer
+        -
+          name: page
+          in: query
+          description: 'Номер страницы'
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+  '/api/shift/{id}':
+    get:
+      tags:
+        - Смены
+      summary: 'Найти смены по id'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'ID смены'
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Success
+    put:
+      tags:
+        - Смены
+      summary: 'Обновить смену'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              properties:
+                date_start:
+                  description: 'Дата начала'
+                  type: date
+                date_end:
+                  description: 'Дата конца'
+                  type: date
+                orders:
+                  description: Заказы
+                  type: json
+                id_technologist:
+                  description: 'Id технолога'
+                  type: integer
+                id_technician:
+                  description: 'Id техника'
+                  type: integer
+              type: object
+      responses:
+        '200':
+          description: ''
+    delete:
+      tags:
+        - Смены
+      summary: 'Удалить смену по id'
+      operationId: f880dd98b34a74c15b96d0f358dd6ef7
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'ID смены'
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Success
+  /api/shift/:
+    post:
+      tags:
+        - Смены
+      summary: 'Добавить смену'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              properties:
+                date_start:
+                  description: 'Дата начала'
+                  type: date
+                date_end:
+                  description: 'Дата конца'
+                  type: date
+                orders:
+                  description: Заказы
+                  type: json
+                id_technologist:
+                  description: 'Id технолога'
+                  type: integer
+                id_technician:
+                  description: 'Id техника'
+                  type: integer
+              type: object
+      responses:
+        '200':
+          description: ''
+  /api/transport-number:
+    post:
+      tags:
+        - 'Номер транспорта'
+      summary: 'Поиск номера транспорта на картинке'
+      operationId: c52b641f338f30992dfcf2a93ee9b77e
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              properties:
+                image:
+                  description: 'Картинка транспорта'
+                  type: string
+              type: object
+      responses:
+        '200':
+          description: 'Авторизация прошла успешно'
+  /api/vagon:
+    get:
+      tags:
+        - Вагоны
+      summary: 'Найти все вагоны'
+      parameters:
+        -
+          name: per-page
+          in: query
+          description: 'Кол-во записей на странице'
+          required: false
+          schema:
+            type: integer
+        -
+          name: page
+          in: query
+          description: 'Номер страницы'
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+  '/api/vagon/{id}':
+    get:
+      tags:
+        - Вагоны
+      summary: 'Найти вагоны по id'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'ID вагона'
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Success
+    put:
+      tags:
+        - Вагоны
+      summary: 'Обновить вагон'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              properties:
+                auto_number:
+                  description: 'Номер вагона'
+                  type: string
+                weight:
+                  description: Вес
+                  type: string
+                status:
+                  description: Статус
+                  type: string
+                fixation:
+                  description: 'Фиксированные данные'
+                  type: json
+                id_technologist:
+                  description: 'Id технолога'
+                  type: integer
+                id_technician:
+                  description: 'Id техника'
+                  type: integer
+                declared_rejection_rate:
+                  description: 'Заявленный процент брака (дельта)'
+                  type: integer
+                actual_scrap_rate:
+                  description: 'Фактический процент брака ( дельта факт)'
+                  type: integer
+                defect:
+                  description: 'Брак в тоннах '
+                  type: string
+                pure_material:
+                  description: 'Чистое сырьё без брака'
+                  type: string
+                id_provider:
+                  description: 'Id поставщика'
+                  type: integer
+                id_reception_point:
+                  description: 'Id пункт приёма'
+                  type: integer
+              type: object
+      responses:
+        '200':
+          description: ''
+    delete:
+      tags:
+        - Вагоны
+      summary: 'Удалить вагон по id'
+      operationId: 023e589bb3fa9bf4051ddffff66b3d6f
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'ID вагона'
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Success
+  /api/vagon/:
+    post:
+      tags:
+        - Вагоны
+      summary: 'Добавить вагон'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              properties:
+                auto_number:
+                  description: 'Номер вагона'
+                  type: string
+                weight:
+                  description: Вес
+                  type: string
+                status:
+                  description: Статус
+                  type: string
+                fixation:
+                  description: 'Фиксированные данные'
+                  type: json
+                id_technologist:
+                  description: 'Id технолога'
+                  type: integer
+                id_technician:
+                  description: 'Id техника'
+                  type: integer
+                declared_rejection_rate:
+                  description: 'Заявленный процент брака (дельта)'
+                  type: integer
+                actual_scrap_rate:
+                  description: 'Фактический процент брака ( дельта факт)'
+                  type: integer
+                defect:
+                  description: 'Брак в тоннах '
+                  type: string
+                pure_material:
+                  description: 'Чистое сырьё без брака'
+                  type: string
+                id_provider:
+                  description: 'Id поставщика'
+                  type: integer
+                id_reception_point:
+                  description: 'Id пункт приёма'
+                  type: integer
+              type: object
+      responses:
+        '200':
+          description: ''
+  /api/warehouse:
+    get:
+      tags:
+        - Склады
+      summary: 'Найти все склады'
+      parameters:
+        -
+          name: per-page
+          in: query
+          description: 'Кол-во записей на странице'
+          required: false
+          schema:
+            type: integer
+        -
+          name: page
+          in: query
+          description: 'Номер страницы'
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+  '/api/warehouse/{id}':
+    get:
+      tags:
+        - Склады
+      summary: 'Найти склады по id'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'ID склада'
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Success
+    put:
+      tags:
+        - Склады
+      summary: 'Обновить склад'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              properties:
+                reception_points:
+                  description: 'Данные о пунктах приема'
+                  type: json
+                volume:
+                  description: 'Общий объем'
+                  type: double
+                fullness:
+                  description: 'Процент наполненности'
+                  type: int
+              type: object
+      responses:
+        '200':
+          description: ''
+    delete:
+      tags:
+        - Склады
+      summary: 'Удалить склад по id'
+      operationId: c2bd7cf0def0c5ed60900743005ee88b
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'ID склада'
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Success
+  /api/warehouse/:
+    post:
+      tags:
+        - Склады
+      summary: 'Добавить склад'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              properties:
+                reception_points:
+                  description: 'Данные о пунктах приема'
+                  type: json
+                volume:
+                  description: 'Общий объем'
+                  type: double
+                fullness:
+                  description: 'Процент наполненности'
+                  type: int
+              type: object
+      responses:
+        '200':
+          description: ''
+  /api/workers:
+    get:
+      tags:
+        - Работники
+      summary: 'Найти всех работников'
+      parameters:
+        -
+          name: per-page
+          in: query
+          description: 'Кол-во записей на странице'
+          required: false
+          schema:
+            type: integer
+        -
+          name: page
+          in: query
+          description: 'Номер страницы'
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success
+  '/api/workers/{id}':
+    get:
+      tags:
+        - Работники
+      summary: 'Найти работника по id'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'ID работника'
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Success
+  /api/worker/:
+    post:
+      tags:
+        - Работники
+      summary: 'Добавить работника'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              properties:
+                name:
+                  description: ФИО
+                  type: string
+                type:
+                  description: Тип
+                  type: integer
+                status:
+                  description: Статус
+                  type: string
+                reception_point:
+                  description: 'Пункт приема'
+                  type: json
+              type: object
+      responses:
+        '200':
+          description: ''
+  '/api/worker/{id}':
+    put:
+      tags:
+        - Работники
+      summary: 'Обновить работника'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              properties:
+                name:
+                  description: ФИО
+                  type: string
+                type:
+                  description: Тип
+                  type: integer
+                status:
+                  description: Статус
+                  type: string
+                reception_point:
+                  description: 'Пункт приема'
+                  type: json
+              type: object
+      responses:
+        '200':
+          description: ''
+    delete:
+      tags:
+        - Работники
+      summary: 'Удалить работника по id'
+      operationId: 2875a2f8807f95adb137a01310e95cec
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'ID работника'
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Success

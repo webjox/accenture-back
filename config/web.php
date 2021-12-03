@@ -14,7 +14,15 @@ $config = [
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => '123',
+            'cookieValidationKey' => 'accenture',
+            'baseUrl'=>'',
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ]
+        ],
+        'jwt' => [
+            'class' => 'sizeg\jwt\Jwt',
+            'key'   => 'secret',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -28,10 +36,16 @@ $config = [
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
-            // send all mails to a file by default. You have to set
-            // 'useFileTransport' to false and configure a transport
-            // for the mailer to send real emails.
-            'useFileTransport' => true,
+            'useFileTransport' => false,
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'smtp.gmail.com',
+                'username' => 'veresglya@gmail.com',
+                'password' => 'jjlwpbdcpoobnein',
+                'port' => '587',
+                'encryption' => 'tls',
+                'streamOptions' => [ 'ssl' => [ 'allow_self_signed' => true, 'verify_peer' => false, 'verify_peer_name' => false, ], ]
+            ],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -43,14 +57,20 @@ $config = [
             ],
         ],
         'db' => $db,
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
+            'enableStrictParsing' => true,
             'showScriptName' => false,
             'rules' => [
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'api/warehouse', 'pluralize' => false],
+                '<controller:[\w\-]+>/<id:\d+>' => '<controller>/view',
+                '<controller:[\w\-]+>/<action:[\w\-]+>/<id:\d+>' => '<controller>/<action>',
+                '<controller:[\w\-]+>/<action:[\w\-]+>' => '<controller>/<action>',
+                'api/<controller:[\w\-]+>/<action:[\w\-]+>/<id:\d+>' => 'api/<controller>/<action>',
+                'api/<controller:[\w\-]+>/<action:[\w\-]+>' => 'api/<controller>/<action>',
             ],
+
         ],
-        */
     ],
     'params' => $params,
 ];
