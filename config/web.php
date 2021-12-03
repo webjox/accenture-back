@@ -66,6 +66,7 @@ $config = [
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'api/workers', 'pluralize' => false],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'api/material', 'pluralize' => false],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'api/order', 'pluralize' => false],
+         ['class' => 'yii\rest\UrlRule', 'controller' => 'api/order-analytics', 'pluralize' => false],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'api/reception-point', 'pluralize' => false],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'api/shift', 'pluralize' => false],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'api/vagon', 'pluralize' => false],

@@ -60,6 +60,8 @@ class DashBoardController extends Controller
      */
 
     public function actionIndex($id){
+        $count = Vagon::find()->count();
+        Yii::$app->response->headers->set('X-Total-Count', $count);
         return Vagon::find()
             ->select(['id_reception_point','fixation','declared_rejection_rate','actual_scrap_rate','auto_number'])
             ->where(['id_technologist'=>$id])->all();
